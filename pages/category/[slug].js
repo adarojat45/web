@@ -32,7 +32,7 @@ export default function Category({ data, slug }) {
   };
 
   return (
-    <div className="container mx-auto px-40">
+    <div className="container mx-auto md:px-64">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -48,6 +48,7 @@ export default function Category({ data, slug }) {
       </Head>
 
       <Header title="Category" />
+      <hr />
 
       {posts.map((post, i) => {
         return (

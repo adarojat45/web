@@ -22,7 +22,7 @@ export default function Card(props) {
           );
         })}
         <Link href="/[slug]" as={`/${post.slug}`}>
-          <a className="font-bold text-xl block mb-2">{post.name}</a>
+          <a className="text-xl block mb-2">{post.name}</a>
         </Link>
         {isDetail && (
           <p class="text-gray-700 text-base mb-4">
@@ -32,7 +32,7 @@ export default function Card(props) {
         {post.tags.map((tag, i) => {
           return (
             <Link href="/tag/[slug]" as={`/tag/${tag}`} key={i}>
-              <a className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1 mb-2">
+              <a className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1 mb-2">
                 #{tag}
               </a>
             </Link>

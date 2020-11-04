@@ -11,7 +11,7 @@ export default function Detail({ data }) {
   const [post, setPost] = useState(data);
 
   return (
-    <div className="container mx-auto px-40">
+    <div className="container mx-auto md:px-64">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -26,6 +26,7 @@ export default function Detail({ data }) {
         ></link>
       </Head>
       <Header title={post.name} />
+      <hr />
       <Card post={post} isDetail={true} />
     </div>
   );

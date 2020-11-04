@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import Card from "../components/Card";
+import Face from "../components/Face";
 import Header from "../components/Header";
 
 export default function Home({ data }) {
@@ -21,7 +22,7 @@ export default function Home({ data }) {
   };
 
   return (
-    <div className="container mx-auto px-40">
+    <>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -36,54 +37,16 @@ export default function Home({ data }) {
         ></link>
       </Head>
 
-      <Header title="ajatdarojat45" />
+      <div className="container mx-auto md:px-64">
+        <Header title="ajatdarojat45" />
+        <Face />
+        <hr />
 
-      <div className="flex mb-4">
-        <div className="w-3/4 items-center">
-          <div>
-            <p className="text-4xl font-semibold mb-1 ">
-              Halo, saya Ajat Darojat. 👋🏼
-            </p>
-            <p className="text-xl text-gray-700">
-              Manusia yang ingin berguna dan bermanfaat.
-            </p>
-            <p className="italic text-xl mb-4 text-gray-700 underline">
-              "Luruskan niat, perbaiki sikap, luaskan ilmu dan manfaat"
-            </p>
-            <a
-              href="#"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
-            >
-              /Linkedin
-            </a>
-            <a
-              href="#"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
-            >
-              /Youtube
-            </a>
-            <a
-              href="#"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
-            >
-              /Instagram
-            </a>
-          </div>
-        </div>
-        <div className="flex justify-end w-1/4">
-          <img
-            className="block mx-auto sm:mx-0 sm:flex-shrink-0 h-16 sm:h-40 rounded-full"
-            src="https://cms.ajatdarojat45.id/photos/1/IMG_20200305_180224_451.jpg"
-            alt="Woman's Face"
-          />
-        </div>
+        {posts.map((post, i) => {
+          return <Card post={post} key={i} />;
+        })}
       </div>
-      <hr />
-
-      {posts.map((post, i) => {
-        return <Card post={post} key={i} />;
-      })}
-    </div>
+    </>
   );
 }
 

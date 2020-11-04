@@ -1,13 +1,9 @@
-import { useState } from "react";
 import Link from "next/link";
-import Head from "next/head";
-import Card from "../components/Card";
-import { useRouter } from "next/router";
 
 export default function Header(props) {
   const { title } = props;
   return (
-    <div className="flex mb-4 mt-4 items-center">
+    <div className="flex mb-4 mt-4 items-center md:mx-0 mx-2">
       <div className="w-1/2 flex items-center">
         <Link href="/">
           <a className="text-lg text-gray-700">
