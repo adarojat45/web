@@ -34,9 +34,7 @@ export default function Detail({ data }) {
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
-  const res = await fetch(
-    `https://dev.api.ajatdarojat45.id/webs/findBySlug?slug=${slug}`
-  );
+  const res = await fetch(`${process.env.BASE_URL}/findBySlug?slug=${slug}`);
   const data = await res.json();
   return { props: { data } };
 }
