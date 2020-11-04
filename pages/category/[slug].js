@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Category({ data, slug, url }) {
@@ -50,31 +51,33 @@ export default function Category({ data, slug, url }) {
           rel="stylesheet"
         ></link>
       </Head>
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={handleNext}
-        hasMore={page * meta.perPage < meta.total ? true : false}
-        loader={
-          <p className="text-center m-5">
-            <b>Loading...</b>
-          </p>
-        }
-        endMessage={
-          <p className="text-center m-5">
-            <b>Yay! Kamu sudah liat semuanya.</b>
-          </p>
-        }
-        refreshFunction={handleRefresh}
-        pullDownToRefresh
-        pullDownToRefreshThreshold={50}
-        pullDownToRefreshContent={
-          <h3 style={{ textAlign: "center" }}>&#8595; Pull down to refresh</h3>
-        }
-        releaseToRefreshContent={
-          <h3 className="text-center m-5">&#8593; Release to refresh</h3>
-        }
-      >
-        <div className="container mx-auto md:px-64">
+      <div className="container mx-auto md:px-64">
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={handleNext}
+          hasMore={page * meta.perPage < meta.total ? true : false}
+          loader={
+            <p className="text-center m-5">
+              <b>Loading...</b>
+            </p>
+          }
+          endMessage={
+            <p className="text-center m-5">
+              <b>Yay! Kamu sudah liat semuanya.</b>
+            </p>
+          }
+          refreshFunction={handleRefresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={50}
+          pullDownToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>
+              &#8595; Pull down to refresh
+            </h3>
+          }
+          releaseToRefreshContent={
+            <h3 className="text-center m-5">&#8593; Release to refresh</h3>
+          }
+        >
           <Header title="Category" />
           <hr />
 
@@ -85,8 +88,10 @@ export default function Category({ data, slug, url }) {
               </>
             );
           })}
-        </div>
-      </InfiniteScroll>
+        </InfiniteScroll>
+        <hr />
+        <Footer />
+      </div>
     </>
   );
 }

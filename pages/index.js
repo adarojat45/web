@@ -4,6 +4,7 @@ import Head from "next/head";
 import Card from "../components/Card";
 import Face from "../components/Face";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Home({ data, url }) {
   const [posts, setPosts] = useState(data.data);
@@ -41,7 +42,6 @@ export default function Home({ data, url }) {
           rel="stylesheet"
         ></link>
       </Head>
-
       <div className="container mx-auto md:px-64">
         <InfiniteScroll
           dataLength={posts.length}
@@ -77,6 +77,8 @@ export default function Home({ data, url }) {
             return <Card post={post} key={i} />;
           })}
         </InfiniteScroll>
+        <hr />
+        <Footer />
       </div>
     </>
   );
