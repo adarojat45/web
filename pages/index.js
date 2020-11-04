@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Link from "next/link";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 import Card from "../components/Card";
 import Face from "../components/Face";
@@ -10,13 +10,18 @@ export default function Home({ data }) {
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
 
-  const handlePaginate = async () => {
-    const res = await fetch(
-      `https://dev.api.ajatdarojat45.id/webs?page=${page + 1}`
-    );
+  const handleNext = async () => {
+    const res = await fetch(`${process.env.BASE_URL}?page=${page + 1}`);
     const data = await res.json();
-    console.log(data.data);
     setPosts([...posts, ...data.data]);
+    setMeta(data.mataData);
+    setPage(page + 1);
+  };
+
+  const handleRefresh = async () => {
+    const res = await fetch(`${process.env.BASE_URL}?page=1`);
+    const data = await res.json();
+    setPosts([...data.data]);
     setMeta(data.mataData);
     setPage(page + 1);
   };
@@ -38,20 +43,47 @@ export default function Home({ data }) {
       </Head>
 
       <div className="container mx-auto md:px-64">
-        <Header title="ajatdarojat45" />
-        <Face />
-        <hr />
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={handleNext}
+          hasMore={page * meta.perPage < meta.total ? true : false}
+          loader={
+            <p className="text-center m-5">
+              <b>Loading...</b>
+            </p>
+          }
+          endMessage={
+            <p className="text-center m-5">
+              <b>Yay! Kamu sudah liat semuanya.</b>
+            </p>
+          }
+          refreshFunction={handleRefresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={50}
+          pullDownToRefreshContent={
+            <h3 style={{ textAlign: "center" }}>
+              &#8595; Pull down to refresh
+            </h3>
+          }
+          releaseToRefreshContent={
+            <h3 className="text-center m-5">&#8593; Release to refresh</h3>
+          }
+        >
+          <Header title="ajatdarojat45" />
+          <Face />
+          <hr />
 
-        {posts.map((post, i) => {
-          return <Card post={post} key={i} />;
-        })}
+          {posts.map((post, i) => {
+            return <Card post={post} key={i} />;
+          })}
+        </InfiniteScroll>
       </div>
     </>
   );
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(`https://dev.api.ajatdarojat45.id/webs?page=1`);
+  const res = await fetch(`${process.env.BASE_URL}?page=1`);
   const data = await res.json();
   return { props: { data } };
 }

@@ -12,6 +12,7 @@
     "next": "10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-infinite-scroll-component": "^5.1.0",
     "react-markdown": "^5.0.2",
     "remark-gfm": "^1.0.0"
   }
