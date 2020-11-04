@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Tag({ data, slug, url }) {
+export default function Tag({ data, slug, url, image }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
@@ -40,7 +40,33 @@ export default function Tag({ data, slug, url }) {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ajat Darojat | @ajatdarojat45</title>
+        <meta
+          name="description"
+          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+        />
+        <meta name="author" content="@ajatdarojat45" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@ajatdarojat45" />
+        <meta name="twitter:creator" content="@ajatdarojat45" />
+        <meta name="twitter:title" content="Ajat Darojat | @ajatdarojat45" />
+        <meta name="twitter:url" content="https://ajatdarojat45.id" />
+        <meta
+          name="twitter:description"
+          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+        />
+        <meta name="twitter:image:src" content={image} />
+
+        <meta property="article:published_time" content="" />
+        <meta property="og:title" content="Ajat Darojat | @ajatdarojat45" />
+        <meta
+          property="og:description"
+          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+        />
+        <meta property="og:url" content="https://ajatdarojat45.id" />
+        <meta property="og:image" content={image} />
         <link rel="icon" href="/favicon.ico" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
@@ -102,5 +128,12 @@ export async function getServerSideProps({ params }) {
     `${process.env.BASE_URL}/findByTag?page=1&tag=${slug}`
   );
   const data = await res.json();
-  return { props: { data, slug, url: process.env.BASE_URL } };
+  return {
+    props: {
+      data,
+      slug,
+      url: process.env.BASE_URL,
+      image: process.env.DISPLAY_PICTURE,
+    },
+  };
 }

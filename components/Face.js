@@ -29,14 +29,21 @@ export default function Face({ image }) {
               href="https://youtube.com/ajatdarojat45"
               className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
             >
-              /Youtube
+              /YT
             </a>
             <a
               target="_blank"
               href="https://insragram.com/ajatdarojat45"
               className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
             >
-              /Instagram
+              /IG
+            </a>
+            <a
+              target="_blank"
+              href="https://twitter.com/ajatdarojat45"
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
+            >
+              /Tweet
             </a>
           </div>
         </div>

@@ -7,13 +7,33 @@ import Head from "next/head";
 import Card from "../components/Card";
 import Header from "../components/Header";
 
-export default function Detail({ data }) {
+export default function Detail({ data, image }) {
   const [post, setPost] = useState(data);
 
   return (
     <div className="container mx-auto md:px-64">
       <Head>
-        <title>Create Next App</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{post.name}</title>
+        <meta name="description" content={post.name} />
+        <meta name="author" content="@ajatdarojat45" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@ajatdarojat45" />
+        <meta name="twitter:creator" content="@ajatdarojat45" />
+        <meta name="twitter:title" content={post.name} />
+        <meta
+          name="twitter:url"
+          content={`https://ajatdarojat45.id/${post.slug}`}
+        />
+        <meta name="twitter:description" content={post.name} />
+        <meta name="twitter:image:src" content={image} />
+
+        <meta property="article:published_time" content="" />
+        <meta property="og:title" content="Ajat Darojat | @ajatdarojat45" />
+        <meta property="og:description" content={post.name} />
+        <meta property="og:url" content="https://ajatdarojat45.id" />
+        <meta property="og:image" content={image} />
         <link rel="icon" href="/favicon.ico" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
@@ -36,5 +56,5 @@ export async function getServerSideProps({ params }) {
   const { slug } = params;
   const res = await fetch(`${process.env.BASE_URL}/findBySlug?slug=${slug}`);
   const data = await res.json();
-  return { props: { data } };
+  return { props: { data, image: process.env.DISPLAY_PICTURE } };
 }
