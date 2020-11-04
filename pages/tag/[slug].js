@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Tag({ data, slug }) {
+export default function Tag({ data, slug, url }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
@@ -12,29 +13,31 @@ export default function Tag({ data, slug }) {
   const router = useRouter();
 
   useEffect(async () => {
-    const res = await fetch(
-      `https://dev.api.ajatdarojat45.id/webs/findByTag?page=1&tag=${slug}`
-    );
+    const res = await fetch(`${url}/findByTag?page=1&tag=${slug}`);
     const data = await res.json();
     setPosts([...data.data]);
     setMeta(data.mataData);
     setPage(page + 1);
   }, [slug]);
 
-  const handlePaginate = async () => {
-    const res = await fetch(
-      `https://dev.api.ajatdarojat45.id/webs/findByTag?page=${
-        page + 1
-      }&tag=${slug}`
-    );
+  const handleNext = async () => {
+    const res = await fetch(`${url}/findByTag?page=${page + 1}&tag=${slug}`);
     const data = await res.json();
     setPosts([...posts, ...data.data]);
     setMeta(data.mataData);
     setPage(page + 1);
   };
 
+  const handleRefresh = async () => {
+    const res = await fetch(`${url}/findByTag?page=1&tag=${slug}`);
+    const data = await res.json();
+    setPosts([...data.data]);
+    setMeta(data.mataData);
+    setPage(1);
+  };
+
   return (
-    <div className="container mx-auto md:px-64">
+    <>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -48,26 +51,51 @@ export default function Tag({ data, slug }) {
           rel="stylesheet"
         ></link>
       </Head>
-
-      <Header title={`#${router.query.slug}`} />
-      <hr />
-
-      {posts.map((post, i) => {
-        return (
-          <>
-            <Card post={post} key={i} />
-          </>
-        );
-      })}
-    </div>
+      <InfiniteScroll
+        dataLength={posts.length}
+        next={handleNext}
+        hasMore={page * meta.perPage < meta.total ? true : false}
+        loader={
+          <p className="text-center m-5">
+            <b>Loading...</b>
+          </p>
+        }
+        endMessage={
+          <p className="text-center m-5">
+            <b>Yay! Kamu sudah liat semuanya.</b>
+          </p>
+        }
+        refreshFunction={handleRefresh}
+        pullDownToRefresh
+        pullDownToRefreshThreshold={50}
+        pullDownToRefreshContent={
+          <h3 style={{ textAlign: "center" }}>&#8595; Pull down to refresh</h3>
+        }
+        releaseToRefreshContent={
+          <h3 className="text-center m-5">&#8593; Release to refresh</h3>
+        }
+      >
+        <div className="container mx-auto md:px-64">
+          <Header title={`#${router.query.slug}`} />
+          <hr />
+          {posts.map((post, i) => {
+            return (
+              <>
+                <Card post={post} key={i} />
+              </>
+            );
+          })}
+        </div>
+      </InfiniteScroll>
+    </>
   );
 }
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
   const res = await fetch(
-    `https://dev.api.ajatdarojat45.id/webs/findByTag?page=1&tag=${slug}`
+    `${process.env.BASE_URL}/findByTag?page=1&tag=${slug}`
   );
   const data = await res.json();
-  return { props: { data, slug } };
+  return { props: { data, slug, url: process.env.BASE_URL } };
 }

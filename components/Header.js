@@ -12,7 +12,7 @@ export default function Header(props) {
         </Link>
       </div>
       <div className="w-1/2 flex justify-end items-center">
-        <span>🌝</span>
+        {/* <span>🌝</span> */}
       </div>
     </div>
   );

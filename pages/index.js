@@ -5,13 +5,13 @@ import Card from "../components/Card";
 import Face from "../components/Face";
 import Header from "../components/Header";
 
-export default function Home({ data }) {
+export default function Home({ data, url }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
 
   const handleNext = async () => {
-    const res = await fetch(`${process.env.BASE_URL}?page=${page + 1}`);
+    const res = await fetch(`${url}?page=${page + 1}`);
     const data = await res.json();
     setPosts([...posts, ...data.data]);
     setMeta(data.mataData);
@@ -19,11 +19,11 @@ export default function Home({ data }) {
   };
 
   const handleRefresh = async () => {
-    const res = await fetch(`${process.env.BASE_URL}?page=1`);
+    const res = await fetch(`${url}?page=1`);
     const data = await res.json();
     setPosts([...data.data]);
     setMeta(data.mataData);
-    setPage(page + 1);
+    setPage(1);
   };
 
   return (
@@ -85,5 +85,5 @@ export default function Home({ data }) {
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.BASE_URL}?page=1`);
   const data = await res.json();
-  return { props: { data } };
+  return { props: { data, url: process.env.BASE_URL } };
 }
