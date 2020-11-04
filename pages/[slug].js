@@ -6,6 +6,7 @@ import gfm from "remark-gfm";
 import Head from "next/head";
 import Card from "../components/Card";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Detail({ data, image }) {
   const [post, setPost] = useState(data);
@@ -48,6 +49,8 @@ export default function Detail({ data, image }) {
       <Header title={post.name} />
       <hr />
       <Card post={post} isDetail={true} />
+      <hr />
+      <Footer />
     </div>
   );
 }

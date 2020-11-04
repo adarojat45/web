@@ -97,7 +97,6 @@ export default function Home({ data, url, image }) {
         >
           <Header title="ajatdarojat45" />
           <Face image={image} />
-          <hr />
 
           {posts.map((post, i) => {
             return <Card post={post} key={i} />;
