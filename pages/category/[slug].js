@@ -1,18 +1,27 @@
-import { useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useState, useEffect } from "react";
 import Head from "next/head";
-import Card from "../components/Card";
-import Face from "../components/Face";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Card from "../../components/Card";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Home({ data, url, image }) {
+export default function Category({ data, slug, url, image }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
 
+  useEffect(async () => {
+    const res = await fetch(`${url}/findByCategory?page=1&category=${slug}`);
+    const data = await res.json();
+    setPosts([...data.data]);
+    setMeta(data.mataData);
+    setPage(page + 1);
+  }, [slug]);
+
   const handleNext = async () => {
-    const res = await fetch(`${url}?page=${page + 1}`);
+    const res = await fetch(
+      `${url}/findByCategory?page=${page + 1}&category=${slug}`
+    );
     const data = await res.json();
     setPosts([...posts, ...data.data]);
     setMeta(data.mataData);
@@ -20,7 +29,7 @@ export default function Home({ data, url, image }) {
   };
 
   const handleRefresh = async () => {
-    const res = await fetch(`${url}?page=1`);
+    const res = await fetch(`${url}/findByCategory?page=1&category=${slug}`);
     const data = await res.json();
     setPosts([...data.data]);
     setMeta(data.mataData);
@@ -95,12 +104,15 @@ export default function Home({ data, url, image }) {
             <h3 className="text-center m-5">&#8593; Release to refresh</h3>
           }
         >
-          <Header title="ajatdarojat45" />
-          <Face image={image} />
+          <Header title="Category" />
           <hr />
 
           {posts.map((post, i) => {
-            return <Card post={post} key={i} />;
+            return (
+              <>
+                <Card post={post} key={i} />
+              </>
+            );
           })}
         </InfiniteScroll>
         <hr />
@@ -110,12 +122,16 @@ export default function Home({ data, url, image }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.BASE_URL}?page=1`);
+export async function getServerSideProps({ params }) {
+  const { slug } = params;
+  const res = await fetch(
+    `${process.env.BASE_URL}/findByCategory?page=1&category=${slug}`
+  );
   const data = await res.json();
   return {
     props: {
       data,
+      slug,
       url: process.env.BASE_URL,
       image: process.env.DISPLAY_PICTURE,
     },
