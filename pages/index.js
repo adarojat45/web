@@ -6,7 +6,7 @@ import Face from "../components/Face";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function Home({ data, url }) {
+export default function Home({ data, url, image }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
@@ -70,7 +70,7 @@ export default function Home({ data, url }) {
           }
         >
           <Header title="ajatdarojat45" />
-          <Face />
+          <Face image={image} />
           <hr />
 
           {posts.map((post, i) => {
@@ -87,5 +87,11 @@ export default function Home({ data, url }) {
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.BASE_URL}?page=1`);
   const data = await res.json();
-  return { props: { data, url: process.env.BASE_URL } };
+  return {
+    props: {
+      data,
+      url: process.env.BASE_URL,
+      image: process.env.DISPLAY_PICTURE,
+    },
+  };
 }

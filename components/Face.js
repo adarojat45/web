@@ -1,10 +1,10 @@
-export default function Face() {
+export default function Face({ image }) {
   return (
     <>
       <div className="md:flex bg-white rounded-lg my-6">
         <img
           className="h-40 w-40 md:h-40 md:w-40 rounded-full mx-auto md:mx-0 md:mr-6"
-          src="https://cms.ajatdarojat45.id/photos/1/IMG_20200305_180224_451.jpg"
+          src={image}
         />
         <div className="text-center md:text-left">
           <h2 className="text-2xl md:text-4xl mx-auto">
