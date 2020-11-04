@@ -1,65 +1,94 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from "react";
+import Link from "next/link";
+import Head from "next/head";
+import Card from "../components/Card";
+import Header from "../components/Header";
 
-export default function Home() {
+export default function Home({ data }) {
+  const [posts, setPosts] = useState(data.data);
+  const [meta, setMeta] = useState(data.mataData);
+  const [page, setPage] = useState(1);
+
+  const handlePaginate = async () => {
+    const res = await fetch(
+      `https://dev.api.ajatdarojat45.id/webs?page=${page + 1}`
+    );
+    const data = await res.json();
+    console.log(data.data);
+    setPosts([...posts, ...data.data]);
+    setMeta(data.mataData);
+    setPage(page + 1);
+  };
+
   return (
-    <div className={styles.container}>
+    <div className="container mx-auto px-40">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+          rel="stylesheet"
+        ></link>
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Header title="ajatdarojat45" />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+      <div className="flex mb-4">
+        <div className="w-3/4 items-center">
+          <div>
+            <p className="text-4xl font-semibold mb-1 ">
+              Halo, saya Ajat Darojat. 👋🏼
             </p>
-          </a>
+            <p className="text-xl text-gray-700">
+              Manusia yang ingin berguna dan bermanfaat.
+            </p>
+            <p className="italic text-xl mb-4 text-gray-700 underline">
+              "Luruskan niat, perbaiki sikap, luaskan ilmu dan manfaat"
+            </p>
+            <a
+              href="#"
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
+            >
+              /Linkedin
+            </a>
+            <a
+              href="#"
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
+            >
+              /Youtube
+            </a>
+            <a
+              href="#"
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-1"
+            >
+              /Instagram
+            </a>
+          </div>
         </div>
-      </main>
+        <div className="flex justify-end w-1/4">
+          <img
+            className="block mx-auto sm:mx-0 sm:flex-shrink-0 h-16 sm:h-40 rounded-full"
+            src="https://cms.ajatdarojat45.id/photos/1/IMG_20200305_180224_451.jpg"
+            alt="Woman's Face"
+          />
+        </div>
+      </div>
+      <hr />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      {posts.map((post, i) => {
+        return <Card post={post} key={i} />;
+      })}
     </div>
-  )
+  );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`https://dev.api.ajatdarojat45.id/webs?page=1`);
+  const data = await res.json();
+  return { props: { data } };
 }
