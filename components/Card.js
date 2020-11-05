@@ -1,9 +1,8 @@
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
 import Moment from "react-moment";
 import { Collapse } from "react-collapse";
 import { useState } from "react";
+import ReactHtmlParser from "react-html-parser";
 
 export default function Card(props) {
   const { post, isDetail } = props;
@@ -46,9 +45,10 @@ export default function Card(props) {
           <a className="text-xl block mb-2 font-medium">{post.name}</a>
         </Link>
         <Collapse isOpened={isCollapse}>
-          <p className="text-gray-700 text-base mb-4 text-justify">
-            <ReactMarkdown plugins={[gfm]} children={post.description} />
-          </p>
+          <div className="text-gray-700 text-base mb-4 text-justify">
+            {ReactHtmlParser(post.description)}
+            {/* <ReactMarkdown plugins={[gfm]} children={post.description} /> */}
+          </div>
         </Collapse>
         {post.tags.map((tag, i) => {
           return (
