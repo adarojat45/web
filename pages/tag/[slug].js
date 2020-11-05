@@ -77,6 +77,21 @@ export default function Tag({ data, slug, url, image }) {
           href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
           rel="stylesheet"
         ></link>
+        {/* Global site tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-119525260-1"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-119525260-1');
+            `,
+          }}
+        />
       </Head>
       <div className="container mx-auto md:px-64">
         <InfiniteScroll
