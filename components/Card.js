@@ -16,7 +16,7 @@ export default function Card(props) {
   return (
     <div className="rounded overflow-hidden shadow-lg my-5 bg-gray-100">
       <div className="px-6 py-4">
-        <div class="flex mb-4">
+        <div class="flex">
           <div class="w-3/4">
             {post.categories.map((category, i) => {
               return (
