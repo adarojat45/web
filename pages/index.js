@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Head from "next/head";
 import Card from "../components/Card";
@@ -6,10 +6,33 @@ import Face from "../components/Face";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+const themes = {
+  light: {
+    foreground: "#2d3748",
+    background: "#edf2f7",
+  },
+  dark: {
+    foreground: "#edf2f7",
+    background: "#2d3748",
+  },
+};
+
 export default function Home({ data, url, image }) {
   const [posts, setPosts] = useState(data.data);
   const [meta, setMeta] = useState(data.mataData);
   const [page, setPage] = useState(1);
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const newTheme = localStorage.getItem("theme");
+    newTheme ? setTheme(newTheme) : setTheme("light");
+  }, []);
+
+  const handleSetTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   const handleNext = async () => {
     const res = await fetch(`${url}?page=${page + 1}`);
@@ -82,43 +105,54 @@ export default function Home({ data, url, image }) {
           }}
         />
       </Head>
-      <div className="container mx-auto md:px-64">
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={handleNext}
-          hasMore={page * meta.perPage < meta.total ? true : false}
-          loader={
-            <p className="text-center m-5">
-              <b>Loading...</b>
-            </p>
-          }
-          endMessage={
-            <p className="text-center m-5">
-              <b>Yay! Kamu sudah liat semuanya.</b>
-            </p>
-          }
-          refreshFunction={handleRefresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={50}
-          pullDownToRefreshContent={
-            <h3 style={{ textAlign: "center" }}>
-              &#8595; Pull down to refresh
-            </h3>
-          }
-          releaseToRefreshContent={
-            <h3 className="text-center m-5">&#8593; Release to refresh</h3>
-          }
-        >
-          <Header title="ajatdarojat45" />
-          <Face image={image} />
+      <body
+        style={{
+          background: themes[theme].background,
+          color: themes[theme].foreground,
+        }}
+      >
+        <div className="container mx-auto md:px-64">
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={handleNext}
+            hasMore={page * meta.perPage < meta.total ? true : false}
+            loader={
+              <p className="text-center m-5">
+                <b>Loading...</b>
+              </p>
+            }
+            endMessage={
+              <p className="text-center m-5">
+                <b>Yay! Kamu sudah liat semuanya.</b>
+              </p>
+            }
+            refreshFunction={handleRefresh}
+            pullDownToRefresh
+            pullDownToRefreshThreshold={50}
+            pullDownToRefreshContent={
+              <h3 style={{ textAlign: "center" }}>
+                &#8595; Pull down to refresh
+              </h3>
+            }
+            releaseToRefreshContent={
+              <h3 className="text-center m-5">&#8593; Release to refresh</h3>
+            }
+          >
+            <Header
+              title="ajatdarojat45"
+              theme={theme}
+              onSetTheme={handleSetTheme}
+            />
+            <Face image={image} />
 
-          {posts.map((post, i) => {
-            return <Card post={post} key={i} />;
-          })}
-        </InfiniteScroll>
-        <hr />
-        <Footer />
-      </div>
+            {posts.map((post, i) => {
+              return <Card post={post} key={i} />;
+            })}
+          </InfiniteScroll>
+          <hr />
+          <Footer />
+        </div>
+      </body>
     </>
   );
 }

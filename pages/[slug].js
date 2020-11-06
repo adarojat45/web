@@ -1,18 +1,38 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+const themes = {
+  light: {
+    foreground: "#2d3748",
+    background: "#edf2f7",
+  },
+  dark: {
+    foreground: "#edf2f7",
+    background: "#2d3748",
+  },
+};
+
 export default function Detail({ data, image }) {
   const [post, setPost] = useState(data);
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const newTheme = localStorage.getItem("theme");
+    newTheme ? setTheme(newTheme) : setTheme("light");
+  }, []);
+
+  const handleSetTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
-    <div className="container mx-auto md:px-64">
+    <>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -75,20 +95,29 @@ export default function Detail({ data, image }) {
           }}
         />
       </Head>
-      <Header title={post.name} />
-      <hr />
-      <Card post={post} isDetail={true} />
-      <br />
-      <div id="disqus_thread"></div>
-      <noscript>
-        Please enable JavaScript to view the{" "}
-        <a href="https://disqus.com/?ref_noscript">
-          comments powered by Disqus.
-        </a>
-      </noscript>
-      <hr />
-      <Footer />
-    </div>
+      <body
+        style={{
+          backgroundColor: themes[theme].background,
+          color: themes[theme].foreground,
+        }}
+      >
+        <div className="container mx-auto md:px-64">
+          <Header title={post.name} theme={theme} onSetTheme={handleSetTheme} />
+          <br />
+          <Card post={post} isDetail={true} />
+          <br />
+          <div id="disqus_thread"></div>
+          <noscript>
+            Please enable JavaScript to view the{" "}
+            <a href="https://disqus.com/?ref_noscript">
+              comments powered by Disqus.
+            </a>
+          </noscript>
+          <hr />
+          <Footer />
+        </div>
+      </body>
+    </>
   );
 }
 
