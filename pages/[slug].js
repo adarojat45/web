@@ -62,10 +62,30 @@ export default function Detail({ data, image }) {
             `,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ajatdarojat45-id.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            `,
+          }}
+        />
       </Head>
       <Header title={post.name} />
       <hr />
       <Card post={post} isDetail={true} />
+      <br />
+      <div id="disqus_thread"></div>
+      <noscript>
+        Please enable JavaScript to view the{" "}
+        <a href="https://disqus.com/?ref_noscript">
+          comments powered by Disqus.
+        </a>
+      </noscript>
       <hr />
       <Footer />
     </div>

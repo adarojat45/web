@@ -1,7 +1,7 @@
 export default function Face({ image }) {
   return (
     <>
-      <div className="md:flex rounded-lg p-5 shadow-lg bg-gray-100 mt-4">
+      <div className="md:flex rounded-lg p-5 shadow-lg bg-gray-100 mb-4">
         <img
           className="h-40 w-40 md:h-40 md:w-40 rounded-full mx-auto md:mx-0 md:mr-6"
           src={image}

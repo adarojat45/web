@@ -13,7 +13,7 @@ export default function Card(props) {
   };
 
   return (
-    <div className="rounded overflow-hidden shadow-lg my-5 bg-gray-100">
+    <div className="rounded overflow-hidden shadow-lg mb-2 bg-gray-100">
       <div className="px-6 py-4">
         <div className="flex">
           <div className="w-3/4">
