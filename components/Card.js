@@ -13,7 +13,7 @@ export default function Card(props) {
   };
 
   return (
-    <div className="rounded overflow-hidden shadow-lg mb-2 bg-gray-100">
+    <div className="rounded overflow-hidden shadow-lg mb-2">
       <div className="px-6 py-4">
         <div className="flex">
           <div className="w-3/4">
@@ -24,7 +24,7 @@ export default function Card(props) {
                   as={`/category/${category.slug}`}
                   key={i}
                 >
-                  <a className="text-sm leading-tight text-gray-600 mr-1 font-normal">
+                  <a className="text-sm leading-tight mr-1 font-normal">
                     {category.name}
                   </a>
                 </Link>
@@ -37,7 +37,7 @@ export default function Card(props) {
             </p>
           </div>
         </div>
-        <p className="text-xs text-gray-700 mb-2 font-normal">
+        <p className="text-xs mb-2 font-normal">
           <Moment format="MMM. DD">{post.createdAt}</Moment> (
           <Moment fromNow>{post.createdAt}</Moment>)
         </p>
@@ -45,15 +45,14 @@ export default function Card(props) {
           <a className="text-xl block mb-2 font-medium">{post.name}</a>
         </Link>
         <Collapse isOpened={isCollapse}>
-          <div className="text-gray-700 text-base mb-4 text-justify">
+          <div className=" text-base mb-4 text-justify">
             {ReactHtmlParser(post.description)}
-            {/* <ReactMarkdown plugins={[gfm]} children={post.description} /> */}
           </div>
         </Collapse>
         {post.tags.map((tag, i) => {
           return (
             <Link href="/tag/[slug]" as={`/tag/${tag}`} key={i}>
-              <a className="inline-block text-sm text-gray-700 mr-2 mb-2 font-light">
+              <a className="inline-block text-sm mr-2 mb-2 font-light">
                 #{tag}
               </a>
             </Link>

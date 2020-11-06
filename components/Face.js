@@ -1,7 +1,7 @@
 export default function Face({ image }) {
   return (
     <>
-      <div className="md:flex rounded-lg p-5 shadow-lg bg-gray-100 mb-4">
+      <div className="md:flex rounded-lg p-5 shadow-lg mb-4">
         <img
           className="h-40 w-40 md:h-40 md:w-40 rounded-full mx-auto md:mx-0 md:mr-6"
           src={image}
@@ -10,40 +10,40 @@ export default function Face({ image }) {
           <h2 className="text-2xl md:text-4xl mx-auto">
             Halo, saya Ajat Darojat 👋🏼
           </h2>
-          <div className="text-gray-600 md:text-xl text-sm">
+          <div className="md:text-xl text-sm">
             Manusia yang ingin berguna dan bermanfaat.
           </div>
-          <div className="text-gray-600 md:text-xl text-sm underline mb-2 italic">
+          <div className=" md:text-xl text-sm underline mb-2 italic">
             "Luruskan niat, perbaiki sikap, luaskan ilmu dan manfaat"
           </div>
           <div>
             <a
               target="_blank"
               href="https://linkedin.com/in/ajatdarojat45"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
+              className="inline-block py-1 text-base mr-2"
             >
               /Linkedin
             </a>
             <a
               target="_blank"
               href="https://youtube.com/ajatdarojat45"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
+              className="inline-block py-1 text-base mr-2"
             >
-              /YT
+              /Youtube
             </a>
             <a
               target="_blank"
               href="https://insragram.com/ajatdarojat45"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
+              className="inline-block py-1 text-base mr-2"
             >
-              /IG
+              /Instagram
             </a>
             <a
               target="_blank"
               href="https://twitter.com/ajatdarojat45"
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 mr-1"
+              className="inline-block py-1 text-base mr-2"
             >
-              /Tweet
+              /Twitter
             </a>
           </div>
         </div>
