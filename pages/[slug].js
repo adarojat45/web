@@ -66,6 +66,7 @@ export default function Detail({ data, image }) {
       <Header title={post.name} />
       <hr />
       <Card post={post} isDetail={true} />
+      <br />
       <hr />
       <Footer />
     </div>
