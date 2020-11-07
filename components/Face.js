@@ -7,7 +7,7 @@ export default function Face({ image }) {
           src={image}
         />
         <div className="text-center md:text-left">
-          <h2 className="text-2xl md:text-4xl mx-auto">
+          <h2 className="text-2xl md:text-4xl mx-auto m-0">
             Halo, saya Ajat Darojat 👋🏼
           </h2>
           <div className="md:text-xl text-sm">

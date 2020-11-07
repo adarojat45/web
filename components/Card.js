@@ -32,12 +32,12 @@ export default function Card(props) {
             })}
           </div>
           <div className="w-1/4 flex justify-end">
-            <p onClick={handleCollapse}>
+            <a onClick={handleCollapse}>
               {isCollapse ? <span>⬆️</span> : <span>⬇️</span>}
-            </p>
+            </a>
           </div>
         </div>
-        <p className="text-xs mb-2 font-normal">
+        <p className="text-xs m-0 mb-2 font-normal">
           <Moment format="MMM. DD">{post.createdAt}</Moment> (
           <Moment fromNow>{post.createdAt}</Moment>)
         </p>
