@@ -63,10 +63,22 @@ export default function Detail({ data, image }) {
           href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
           rel="stylesheet"
         ></link>
-        <link
+        <style
+          id="holderStyle"
+          dangerouslySetInnerHTML={{
+            __html: `
+         code {
+          background-color: ${theme === "light" ? "#e8e8e8" : "#6d737b"};
+          border-radius: 3px;
+          padding: .1rem .2rem;
+        }
+         `,
+          }}
+        />
+        {/* <link
           href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
           rel="stylesheet"
-        ></link>
+        ></link> */}
         {/* Global site tag (gtag.js) - Google Analytics */}
         <script
           async
@@ -103,10 +115,9 @@ export default function Detail({ data, image }) {
       >
         <div className="container mx-auto md:px-64">
           <Header title={post.name} theme={theme} onSetTheme={handleSetTheme} />
-          <br />
           <Card post={post} isDetail={true} />
           <br />
-          <div id="disqus_thread"></div>
+          <div id="disqus_thread" className="md:p-0 p-4"></div>
           <noscript>
             Please enable JavaScript to view the{" "}
             <a href="https://disqus.com/?ref_noscript">

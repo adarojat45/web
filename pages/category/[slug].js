@@ -26,7 +26,7 @@ export default function Category({ data, slug, url, image }) {
     const newTheme = localStorage.getItem("theme");
     newTheme ? setTheme(newTheme) : setTheme("light");
   }, []);
-  
+
   useEffect(async () => {
     const res = await fetch(`${url}/findByCategory?page=1&category=${slug}`);
     const data = await res.json();
@@ -95,10 +95,22 @@ export default function Category({ data, slug, url, image }) {
           href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
           rel="stylesheet"
         ></link>
-        <link
+        <style
+          id="holderStyle"
+          dangerouslySetInnerHTML={{
+            __html: `
+         code {
+          background-color: ${theme === "light" ? "#e8e8e8" : "#6d737b"};
+          border-radius: 3px;
+          padding: .1rem .2rem;
+        }
+         `,
+          }}
+        />
+        {/* <link
           href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
           rel="stylesheet"
-        ></link>
+        ></link> */}
         {/* Global site tag (gtag.js) - Google Analytics */}
         <script
           async
@@ -153,8 +165,6 @@ export default function Category({ data, slug, url, image }) {
               theme={theme}
               onSetTheme={handleSetTheme}
             />
-            <br />
-
             {posts.map((post, i) => {
               return (
                 <>
