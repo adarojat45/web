@@ -15,8 +15,6 @@ export default function Card(props) {
   useEffect(async () => {
     console.log(isCollapse);
     if (isCollapse === true && !isDetail) {
-      console.log("env", process.env.NEXT_PUBLIC_BASE_URL);
-      console.log("slug", post.slug);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/findBySlug?slug=${post.slug}`
       );
