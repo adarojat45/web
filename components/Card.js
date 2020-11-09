@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Moment from "react-moment";
 import { Collapse } from "react-collapse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 
 export default function Card(props) {
@@ -11,6 +11,18 @@ export default function Card(props) {
   const handleCollapse = () => {
     setIsCollapse(!isCollapse);
   };
+
+  useEffect(async () => {
+    console.log(isCollapse);
+    if (isCollapse === true && !isDetail) {
+      console.log("env", process.env.NEXT_PUBLIC_BASE_URL);
+      console.log("slug", post.slug);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/findBySlug?slug=${post.slug}`
+      );
+      const data = await res.json();
+    }
+  }, [isCollapse]);
 
   return (
     <div className="rounded overflow-hidden shadow-lg mb-2">
