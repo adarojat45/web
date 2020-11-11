@@ -55,7 +55,7 @@ export default function Card(props) {
           <a className="text-xl block mb-2 font-medium">{post.name}</a>
         </Link>
         <Collapse isOpened={isCollapse}>
-          <div className=" text-base mb-4 text-justify">
+          <div className=" text-base mb-4">
             {ReactHtmlParser(post.description)}
           </div>
         </Collapse>
