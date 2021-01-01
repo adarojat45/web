@@ -75,6 +75,7 @@ export default function Home({ data, url, image }) {
         <meta property="article:published_time" content="" />
         {/* twitter */}
         {/* facebook */}
+        <meta property="fb:app_id" content="442555743786001" />
         <meta property="og:url" content="https://ajatdarojat45.id" />
         <meta property="og:title" content="Ajat Darojat | @ajatdarojat45" />
         <meta

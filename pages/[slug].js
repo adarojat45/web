@@ -52,13 +52,17 @@ export default function Detail({ data, image }) {
         <meta property="article:published_time" content="" />
         {/* twitter */}
         {/* facebook */}
+        <meta property="fb:app_id" content="442555743786001" />
         <meta
           property="og:url"
           content={`https://ajatdarojat45.id/${post.slug}`}
         />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={post.name} />
-        <meta property="og:description" content={post.description} />
+        <meta
+          property="og:description"
+          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+        />
         <meta property="og:image" content={image} />
         {/* facebook */}
         <link rel="icon" href="/favicon.ico" />
