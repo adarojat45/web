@@ -37,26 +37,34 @@ export default function Detail({ data, image }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{post.name}</title>
-        <meta name="description" content={post.name} />
-        <meta name="author" content="@ajatdarojat45" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@ajatdarojat45" />
-        <meta name="twitter:creator" content="@ajatdarojat45" />
-        <meta name="twitter:title" content={post.name} />
+        {/* twitter */}
         <meta
           name="twitter:url"
           content={`https://ajatdarojat45.id/${post.slug}`}
         />
-        <meta name="twitter:description" content={post.name} />
+        <meta name="twitter:title" content={post.name} />
+        <meta name="description" content={post.description} />
+        <meta name="author" content="@ajatdarojat45" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@ajatdarojat45" />
+        <meta name="twitter:creator" content="@ajatdarojat45" />
         <meta name="twitter:image:src" content={image} />
         <meta property="article:published_time" content="" />
+        {/* twitter */}
+        {/* facebook */}
+        <meta property="fb:app_id" content="442555743786001" />
+        <meta
+          property="og:url"
+          content={`https://ajatdarojat45.id/${post.slug}`}
+        />
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={post.name} />
         <meta
           property="og:description"
-          content="Ajat Darojat | @ajatdarojat45"
+          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
         />
-        <meta property="og:url" content="https://ajatdarojat45.id" />
         <meta property="og:image" content={image} />
+        {/* facebook */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
