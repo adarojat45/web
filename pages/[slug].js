@@ -1,148 +1,144 @@
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import Head from "next/head";
-import Card from "../components/Card";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Footer } from "../components";
+import parse from "html-react-parser";
+import ReactMarkdown from "react-markdown";
+import Moment from "react-moment";
+import Prism from "prismjs";
+import { useEffect } from "react";
 
-const themes = {
-  light: {
-    foreground: "#2d3748",
-    background: "#edf2f7",
-  },
-  dark: {
-    foreground: "#edf2f7",
-    background: "#2d3748",
-  },
-};
-
-export default function Detail({ data, image }) {
-  const [post, setPost] = useState(data);
-  const [theme, setTheme] = useState("light");
-
+function Detail({ data }) {
   useEffect(() => {
-    const newTheme = localStorage.getItem("theme");
-    newTheme ? setTheme(newTheme) : setTheme("light");
+    Prism.highlightAll();
   }, []);
 
-  const handleSetTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
-
   return (
-    <>
+    <div>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{post.name}</title>
+        <title>{data?.name}</title>
         {/* twitter */}
         <meta
           name="twitter:url"
-          content={`https://ajatdarojat45.id/${post.slug}`}
+          content={`https://ajatdarojat45.id/${data?.slug}`}
         />
-        <meta name="twitter:title" content={post.name} />
-        <meta name="description" content={post.description} />
+        <meta name="twitter:title" content={data?.name} />
+        <meta name="description" content={data?.description} />
         <meta name="author" content="@ajatdarojat45" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@ajatdarojat45" />
         <meta name="twitter:creator" content="@ajatdarojat45" />
-        <meta name="twitter:image:src" content={image} />
+        <meta
+          name="twitter:image:src"
+          content="https://source.unsplash.com/random/300x300"
+        />
         <meta property="article:published_time" content="" />
         {/* twitter */}
         {/* facebook */}
         <meta property="fb:app_id" content="442555743786001" />
         <meta
           property="og:url"
-          content={`https://ajatdarojat45.id/${post.slug}`}
+          content={`https://ajatdarojat45.id/${data?.slug}`}
         />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={post.name} />
+        <meta property="og:title" content={data?.name} />
         <meta
           property="og:description"
-          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+          content={
+            data?.excerpt
+              ? data?.excerpt
+              : "Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+          }
         />
-        <meta property="og:image" content={image} />
+        <meta
+          property="og:image"
+          content="https://source.unsplash.com/random/300x300"
+        />
         {/* facebook */}
+
         <link rel="icon" href="/favicon.ico" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
-          rel="stylesheet"
-        ></link>
         <style
           id="holderStyle"
           dangerouslySetInnerHTML={{
             __html: `
-         code {
-          background-color: ${theme === "light" ? "#e8e8e8" : "#6d737b"};
-          border-radius: 3px;
-          padding: .1rem .2rem;
-        }
-         `,
-          }}
-        />
-        {/* <link
-          href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-          rel="stylesheet"
-        ></link> */}
-        {/* Global site tag (gtag.js) - Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=UA-119525260-1"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-119525260-1');
-            `,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            s.src = 'https://ajatdarojat45-id.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-            `,
+            .prose code {
+              background-color: rgba(0,0,0,.05);
+              border-radius: 3px;
+              padding: 2px 4px;
+              font-weight: normal !important;
+            }
+            code::before {
+              display: none;
+            }
+            code::after {
+              display: none;
+            }
+        `,
           }}
         />
       </Head>
-      <body
-        style={{
-          backgroundColor: themes[theme].background,
-          color: themes[theme].foreground,
-        }}
-      >
-        <div className="container mx-auto md:px-64">
-          <Header title={post.name} theme={theme} onSetTheme={handleSetTheme} />
-          <Card post={post} isDetail={true} />
-          <br />
-          <div id="disqus_thread" className="md:p-0 p-4"></div>
-          <noscript>
-            Please enable JavaScript to view the{" "}
-            <a href="https://disqus.com/?ref_noscript">
-              comments powered by Disqus.
-            </a>
-          </noscript>
-          <hr />
-          <Footer />
-        </div>
-      </body>
-    </>
+
+      <main className="container mx-auto">
+        <article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
+          <header className="text-center">
+            <div className="text-center mb-5">
+              <p
+                className="inline text-gray-500 font-light"
+                title={`${data?.createdAt} minutes`}
+              >
+                <Moment format="MMM. DD">{data?.createdAt}</Moment> (
+                <Moment fromNow>{data?.createdAt}</Moment>)
+              </p>
+            </div>
+            <h1 className="text-center">
+              <span className="text-3x1 font-medium tracking-light text-gray-900 sm:text-4x1">
+                {data?.name}
+              </span>
+            </h1>
+            <div className="text-center">
+              {data?.tags.map((tag, index) => (
+                <p key={index} className="inline text-gray-500 font-light">
+                  #{tag}{" "}
+                </p>
+              ))}
+            </div>
+            <div className="text-center">
+              <hr className="mt-8 border-t2 mx-auto" />
+            </div>
+          </header>
+          <div className="mt-8 mx-auto px-5 text-justify">
+            {parse(data?.description)}
+          </div>
+        </article>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
-export async function getServerSideProps({ params }) {
-  const { slug } = params;
-  const res = await fetch(`${process.env.BASE_URL}/findBySlug?slug=${slug}`);
-  const data = await res.json();
-  return { props: { data, image: process.env.DISPLAY_PICTURE } };
+export async function getServerSideProps(context) {
+  const {
+    params: { slug },
+  } = context;
+  try {
+    const resp = await fetch(`${process.env.BASE_URL}/findBySlug?slug=${slug}`);
+    const data = await resp.json();
+    return {
+      props: {
+        data,
+        url: process.env.BASE_URL,
+        image: process.env.DISPLAY_PICTURE,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        data: null,
+        url: process.env.BASE_URL,
+        image: process.env.DISPLAY_PICTURE,
+      },
+    };
+  }
 }
+
+export default Detail;
