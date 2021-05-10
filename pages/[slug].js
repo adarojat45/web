@@ -5,7 +5,7 @@ import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
 
-function Detail({ data }) {
+function Detail({ data, image }) {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
@@ -55,7 +55,7 @@ function Detail({ data }) {
         />
         {/* facebook */}
 
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={image} />
         <style
           id="holderStyle"
           dangerouslySetInnerHTML={{

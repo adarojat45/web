@@ -81,7 +81,7 @@ function Home({ data, image, url }) {
         <meta property="og:image" content={image} />
         <meta property="og:type" content="website" />
         {/* facebook */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={image} />
         <link
           rel="stylesheet"
           href="https://unpkg.com/@tailwindcss/typography@0.2.x/dist/typography.min.css"
