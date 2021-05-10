@@ -11,7 +11,7 @@ export default function Header({ image }) {
       <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
         <blockquote>
           <p className="text-lg font-normal italic">
-            “Luruskan niat, perbaiki sikap, lusakan ilmu dan manfaat”
+            “Luruskan niat, perbaiki sikap, luaskan ilmu dan manfaat”
           </p>
         </blockquote>
         <figcaption className="font-medium">

@@ -16,20 +16,36 @@ function Detail({ data, image }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{data?.name}</title>
+        <meta name="title" content={data?.name}></meta>
+        <meta
+          name="description"
+          content={
+            data?.excerpt
+              ? data?.excerpt
+              : "Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+          }
+        />
         {/* twitter */}
         <meta
           name="twitter:url"
           content={`https://ajatdarojat45.id/${data?.slug}`}
         />
         <meta name="twitter:title" content={data?.name} />
-        <meta name="description" content={data?.description} />
+        <meta
+          name="description"
+          content={
+            data?.excerpt
+              ? data?.excerpt
+              : "Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+          }
+        />
         <meta name="author" content="@ajatdarojat45" />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@ajatdarojat45" />
         <meta name="twitter:creator" content="@ajatdarojat45" />
         <meta
           name="twitter:image:src"
-          content="https://source.unsplash.com/random/300x300"
+          content="https://source.unsplash.com/random/1200x628"
         />
         <meta property="article:published_time" content="" />
         {/* twitter */}
@@ -51,7 +67,7 @@ function Detail({ data, image }) {
         />
         <meta
           property="og:image"
-          content="https://source.unsplash.com/random/300x300"
+          content="https://source.unsplash.com/random/1200x628"
         />
         {/* facebook */}
 

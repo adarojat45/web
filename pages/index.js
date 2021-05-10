@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function Home({ data, image, url }) {
-  const [posts, setPosts] = useState(data.data);
-  const [showPosts, setShowPosts] = useState(data.data);
-  const [meta, setMeta] = useState(data.mataData);
+  const [posts, setPosts] = useState(data?.data);
+  const [showPosts, setShowPosts] = useState(data?.data);
+  const [meta, setMeta] = useState(data?.mataData);
   const [page, setPage] = useState(1);
   const [categories] = useState([
     "All",
@@ -18,12 +18,15 @@ function Home({ data, image, url }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
-    const newPosts = posts.filter((post) =>
-      post.categories.every((category) =>
-        selectedCategory.includes(category.name)
-      )
-    );
-    selectedCategory === "All" ? setShowPosts(posts) : setShowPosts(newPosts);
+    let _posts = [];
+    posts.map((post) => {
+      post.categories.map((category) => {
+        if (category.name === selectedCategory) {
+          _posts = [..._posts, post];
+        }
+      });
+    });
+    selectedCategory === "All" ? setShowPosts(posts) : setShowPosts(_posts);
   }, [selectedCategory, posts]);
 
   const handleNext = async () => {
@@ -52,6 +55,7 @@ function Home({ data, image, url }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ajat Darojat | @ajatdarojat45</title>
+        <meta name="title" content="Ajat Darojat | @ajatdarojat45"></meta>
         <meta
           name="description"
           content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
@@ -64,10 +68,13 @@ function Home({ data, image, url }) {
           content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
         />
         <meta name="author" content="@ajatdarojat45" />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@ajatdarojat45" />
         <meta name="twitter:creator" content="@ajatdarojat45" />
-        <meta name="twitter:image:src" content={image} />
+        <meta
+          name="twitter:image:src"
+          content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
+        />
         <meta property="article:published_time" content="" />
         {/* twitter */}
         {/* facebook */}
@@ -78,14 +85,13 @@ function Home({ data, image, url }) {
           property="og:description"
           content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
         />
-        <meta property="og:image" content={image} />
+        <meta
+          property="og:image"
+          content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
+        />
         <meta property="og:type" content="website" />
         {/* facebook */}
         <link rel="icon" href={image} />
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/@tailwindcss/typography@0.2.x/dist/typography.min.css"
-        />
       </Head>
 
       <main className="container mx-auto">
