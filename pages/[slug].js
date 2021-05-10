@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Footer } from "../components";
 import parse from "html-react-parser";
-import ReactMarkdown from "react-markdown";
 import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
