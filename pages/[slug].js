@@ -4,6 +4,8 @@ import parse from "html-react-parser";
 import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
+import Link from "next/link";
+import { ChevronLeftIcon } from "@heroicons/react/solid";
 
 function Detail({ data, image }) {
   useEffect(() => {
@@ -91,10 +93,25 @@ function Detail({ data, image }) {
         `,
           }}
         />
+        <script
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-id="ajatdarojat45"
+          data-description="Support me on Buy me a coffee!"
+          data-message=""
+          data-color="#FFDD00"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18"
+        ></script>
       </Head>
 
       <main className="container mx-auto">
         <article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
+          <Link href="/">
+            <a>Kembali</a>
+          </Link>
           <header className="text-center">
             <div className="text-center mb-5">
               <p
