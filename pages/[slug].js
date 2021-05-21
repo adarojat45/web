@@ -108,9 +108,11 @@ function Detail({ data, image }) {
 
       <main className="container mx-auto">
         <article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
-          <Link href="/">
-            <a>Kembali</a>
-          </Link>
+          <div className="mx-auto px-5">
+            <Link href="/">
+              <a>Kembali</a>
+            </Link>
+          </div>
           <header className="text-center">
             <div className="text-center mb-5">
               <p
