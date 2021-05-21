@@ -92,6 +92,7 @@ function Detail({ data, image }) {
         `,
           }}
         />
+        {/* buy me a coffee */}
         <script
           data-name="BMC-Widget"
           data-cfasync="false"
@@ -104,8 +105,8 @@ function Detail({ data, image }) {
           data-x_margin="18"
           data-y_margin="18"
         ></script>
+        {/* buy me a coffee */}
       </Head>
-
       <main className="container mx-auto">
         <article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
           <div className="mx-auto px-5">
@@ -142,6 +143,17 @@ function Detail({ data, image }) {
           <div className="mt-8 mx-auto px-5 text-justify">
             {parse(data?.description)}
           </div>
+          {/* github comment */}
+          <script
+            src="https://utteranc.es/client.js"
+            repo="ajatdarojat45/ajatdarojat45-comment"
+            issue-term="url"
+            label="Comment"
+            theme="github-light"
+            crossOrigin="anonymous"
+            async
+          ></script>
+          {/* github comment */}
         </article>
       </main>
       <Footer />
