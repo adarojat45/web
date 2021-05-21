@@ -5,7 +5,6 @@ import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeftIcon } from "@heroicons/react/solid";
 
 function Detail({ data, image }) {
   useEffect(() => {
