@@ -5,6 +5,7 @@ import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import Link from "next/link";
+import { Comment } from "../components";
 
 function Detail({ data, image }) {
   useEffect(() => {
@@ -109,7 +110,7 @@ function Detail({ data, image }) {
       </Head>
       <main className="container mx-auto">
         <article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
-          <div className="mx-auto px-5">
+          <div className="mx-auto px-5 mb-10">
             <Link href="/">
               <a>Kembali</a>
             </Link>
@@ -143,20 +144,21 @@ function Detail({ data, image }) {
           <div className="mt-8 mx-auto px-5 text-justify">
             {parse(data?.description)}
             {/* buy me a coffee */}
-            <a
-              href="https://www.buymeacoffee.com/ajatdarojat45"
-              target="_blank"
-              className="flex justify-center items-center"
-            >
-              <img
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                alt="Buy Me A Coffee"
-                style={{ height: 60, width: 217, marginBottom: 10 }}
-              />
-            </a>
+            <div className="flex justify-center items-center mb-5">
+              <a
+                href="https://www.buymeacoffee.com/ajatdarojat45"
+                target="_blank"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                  alt="Buy Me A Coffee"
+                  style={{ height: 60, width: 217, marginBottom: 10 }}
+                />
+              </a>
+            </div>
             {/* buy me a coffee */}
             {/* github comment */}
-            <script
+            {/* <script
               src="https://utteranc.es/client.js"
               repo="ajatdarojat45/ajatdarojat45-comment"
               issue-term="url"
@@ -164,7 +166,8 @@ function Detail({ data, image }) {
               theme="github-light"
               crossOrigin="anonymous"
               async
-            ></script>
+            ></script> */}
+            <Comment />
             {/* github comment */}
           </div>
         </article>
