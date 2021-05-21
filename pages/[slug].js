@@ -142,18 +142,31 @@ function Detail({ data, image }) {
           </header>
           <div className="mt-8 mx-auto px-5 text-justify">
             {parse(data?.description)}
+            {/* buy me a coffee */}
+            <a
+              href="https://www.buymeacoffee.com/ajatdarojat45"
+              target="_blank"
+              className="flex justify-center items-center"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me A Coffee"
+                style={{ height: 60, width: 217, marginBottom: 10 }}
+              />
+            </a>
+            {/* buy me a coffee */}
+            {/* github comment */}
+            <script
+              src="https://utteranc.es/client.js"
+              repo="ajatdarojat45/ajatdarojat45-comment"
+              issue-term="url"
+              label="Comment"
+              theme="github-light"
+              crossOrigin="anonymous"
+              async
+            ></script>
+            {/* github comment */}
           </div>
-          {/* github comment */}
-          <script
-            src="https://utteranc.es/client.js"
-            repo="ajatdarojat45/ajatdarojat45-comment"
-            issue-term="url"
-            label="Comment"
-            theme="github-light"
-            crossOrigin="anonymous"
-            async
-          ></script>
-          {/* github comment */}
         </article>
       </main>
       <Footer />
