@@ -5,7 +5,7 @@ import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import Link from "next/link";
-import { Comment } from "../components";
+import { Comment, SocialShare } from "../components";
 
 function Detail({ data, image }) {
   useEffect(() => {
@@ -115,7 +115,7 @@ function Detail({ data, image }) {
               <a>Kembali</a>
             </Link>
           </div>
-          <header className="text-center">
+          <header className="text-center border-b">
             <div className="text-center mb-5">
               <p
                 className="inline text-gray-500 font-light"
@@ -137,8 +137,8 @@ function Detail({ data, image }) {
                 </p>
               ))}
             </div>
-            <div className="text-center">
-              <hr className="mt-8 border-t2 mx-auto" />
+            <div className="text-center my-5">
+              <SocialShare data={data} />
             </div>
           </header>
           <div className="mt-8 mx-auto px-5 text-justify">

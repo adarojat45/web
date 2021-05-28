@@ -5,3 +5,4 @@ export { default as NavItem } from "./NavItem";
 export { default as Footer } from "./Footer";
 export { default as Header } from "./Header";
 export { default as Comment } from "./Comment";
+export { default as SocialShare } from "./SocialShare";
