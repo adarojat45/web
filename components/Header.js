@@ -1,3 +1,5 @@
+import SocialMedia from "./SocialMedia";
+
 export default function Header({ image }) {
   return (
     <figure className="md:flex rounded-xl p-8 md:p-0">
@@ -20,6 +22,7 @@ export default function Header({ image }) {
             Software Engineer & Coding Instructor
           </div>
         </figcaption>
+        <SocialMedia />
       </div>
     </figure>
   );

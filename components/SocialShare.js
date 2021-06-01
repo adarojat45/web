@@ -1,43 +1,49 @@
 import {
   FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
   LinkedinShareButton,
-  LinkedinIcon,
   TelegramShareButton,
-  TelegramIcon,
-} from "next-share";
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+import { SocialIcon } from "react-social-icons";
+
+const styles = {
+  height: 40,
+  width: 40,
+  marginRight: 5,
+};
 
 const BASE_URL = "https://ajatdarojat45.id";
 
 function SocialShare({ data }) {
   return (
     <>
-      <FacebookShareButton
-        url={`${BASE_URL}/${data?.slug}`}
-        quote={data?.name}
-        hashtag={"#nextshare"}
-      >
-        <FacebookIcon size={32} round className="mx-1" />
+      <FacebookShareButton url={`${BASE_URL}/${data.slug}`}>
+        <SocialIcon network="facebook" style={styles} />
       </FacebookShareButton>
-      <TwitterShareButton url={`${BASE_URL}/${data?.slug}`} title={data?.name}>
-        <TwitterIcon size={32} round className="mx-1" />
+      <TwitterShareButton
+        url={`${BASE_URL}/${data.slug}`}
+        title={data.name}
+        hashtags={data.tags}
+      >
+        <SocialIcon network="twitter" style={styles} />
       </TwitterShareButton>
-      <LinkedinShareButton url={`${BASE_URL}/${data?.slug}`}>
-        <LinkedinIcon size={32} round className="mx-1" />
+      <LinkedinShareButton
+        url={`${BASE_URL}/${data.slug}`}
+        title={data.name}
+        source={BASE_URL}
+      >
+        <SocialIcon network="linkedin" style={styles} />
       </LinkedinShareButton>
       <WhatsappShareButton
-        url={`${BASE_URL}/${data?.slug}`}
-        title={data?.name}
-        separator=":: "
+        url={`${BASE_URL}/${data.slug}`}
+        title={data.name}
+        separator={"\n\n"}
       >
-        <WhatsappIcon size={32} round className="mx-1" />
+        <SocialIcon network="whatsapp" style={styles} />
       </WhatsappShareButton>
-      <TelegramShareButton url={`${BASE_URL}/${data?.slug}`} title={data?.name}>
-        <TelegramIcon size={32} round className="mx-1" />
+      <TelegramShareButton url={`${BASE_URL}/${data.slug}`} title={data.name}>
+        <SocialIcon network="telegram" style={styles} />
       </TelegramShareButton>
     </>
   );

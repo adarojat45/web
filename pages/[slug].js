@@ -143,6 +143,9 @@ function Detail({ data, image }) {
           </header>
           <div className="mt-8 mx-auto px-5 text-justify">
             {parse(data?.description)}
+            <div className="text-center">
+              <SocialShare data={data} />
+            </div>
             {/* buy me a coffee */}
             <div className="flex justify-center items-center mb-5">
               <a
