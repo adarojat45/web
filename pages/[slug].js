@@ -6,6 +6,7 @@ import Prism from "prismjs";
 import { useEffect } from "react";
 import Link from "next/link";
 import { Comment, SocialShare } from "../components";
+import ReactMarkdown from "react-markdown";
 
 function Detail({ data, image }) {
   useEffect(() => {
@@ -142,7 +143,11 @@ function Detail({ data, image }) {
             </div>
           </header>
           <div className="mt-8 mx-auto px-5 text-justify">
-            {parse(data?.description)}
+            {data?.isMarkdown ? (
+              <ReactMarkdown>{data?.description}</ReactMarkdown>
+            ) : (
+              parse(data?.description)
+            )}
             <div className="text-center">
               <SocialShare data={data} />
             </div>
