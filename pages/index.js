@@ -2,184 +2,239 @@ import Head from "next/head";
 import { List, ListItem, Nav, NavItem, Header, Footer } from "../components";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import _ from "lodash";
+import { useCallback } from "react";
 
 function Home({ data, image, url }) {
-  const [posts, setPosts] = useState(data?.data);
-  const [showPosts, setShowPosts] = useState(data?.data);
-  const [meta, setMeta] = useState(data?.mataData);
-  const [page, setPage] = useState(1);
-  const [categories] = useState([
-    "All",
-    "Blog",
-    "Podcast",
-    "Video",
-    "Eksperimen",
-  ]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+	const [posts, setPosts] = useState(data?.data);
+	const [showPosts, setShowPosts] = useState(data?.data);
+	const [meta, setMeta] = useState(data?.mataData);
+	const [page, setPage] = useState(1);
+	const [categories] = useState([
+		"All",
+		"Blog",
+		"Podcast",
+		"Video",
+		"Eksperimen",
+	]);
+	const [selectedCategory, setSelectedCategory] = useState("All");
+	const [searchInput, setSearchInput] = useState("");
 
-  useEffect(() => {
-    let _posts = [];
-    posts.map((post) => {
-      post.categories.map((category) => {
-        if (category.name === selectedCategory) {
-          _posts = [..._posts, post];
-        }
-      });
-    });
-    selectedCategory === "All" ? setShowPosts(posts) : setShowPosts(_posts);
-  }, [selectedCategory, posts]);
+	useEffect(() => {
+		let _posts = [];
+		posts.map((post) => {
+			post.categories.map((category) => {
+				if (category.name === selectedCategory) {
+					_posts = [..._posts, post];
+				}
+			});
+		});
+		selectedCategory === "All" ? setShowPosts(posts) : setShowPosts(_posts);
+	}, [selectedCategory, posts]);
 
-  const handleNext = async () => {
-    const res = await fetch(`${url}?page=${page + 1}`);
-    const data = await res.json();
-    setPosts([...posts, ...data.data]);
-    setMeta(data.mataData);
-    setPage(page + 1);
-  };
+	const handleNext = async () => {
+		if (searchInput === "") {
+			const res = await fetch(`${url}?page=${page + 1}`);
+			const data = await res.json();
+			setPosts([...posts, ...data.data]);
+			setMeta(data.mataData);
+			setPage(page + 1);
+		}
+	};
 
-  const handleRefresh = async () => {
-    const res = await fetch(`${url}?page=1`);
-    const data = await res.json();
-    setPosts([...data.data]);
-    setMeta(data.mataData);
-    setPage(1);
-  };
+	const handleRefresh = async () => {
+		const res = await fetch(`${url}?page=1`);
+		const data = await res.json();
+		setPosts([...data.data]);
+		setMeta(data.mataData);
+		setPage(1);
+		setSearchInput("");
+	};
 
-  const handleSelectCategory = (newCategory) => {
-    setSelectedCategory(newCategory);
-  };
+	const handleSelectCategory = (newCategory) => {
+		setSelectedCategory(newCategory);
+	};
 
-  return (
-    <div>
-      <Head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Ajat Darojat | @ajatdarojat45</title>
-        <meta name="title" content="Ajat Darojat | @ajatdarojat45"></meta>
-        <meta
-          name="description"
-          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
-        />
-        {/* twitter */}
-        <meta name="twitter:url" content="https://ajatdarojat45.id" />
-        <meta name="twitter:title" content="Ajat Darojat | @ajatdarojat45" />
-        <meta
-          name="twitter:description"
-          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
-        />
-        <meta name="author" content="@ajatdarojat45" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@ajatdarojat45" />
-        <meta name="twitter:creator" content="@ajatdarojat45" />
-        <meta
-          name="twitter:image:src"
-          content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
-        />
-        <meta property="article:published_time" content="" />
-        {/* twitter */}
-        {/* facebook */}
-        <meta property="fb:app_id" content="442555743786001" />
-        <meta property="og:url" content="https://ajatdarojat45.id" />
-        <meta property="og:title" content="Ajat Darojat | @ajatdarojat45" />
-        <meta
-          property="og:description"
-          content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
-        />
-        <meta
-          property="og:image"
-          content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
-        />
-        <meta property="og:type" content="website" />
-        {/* facebook */}
-        <link rel="icon" href={image} />
-        <script
-          data-name="BMC-Widget"
-          data-cfasync="false"
-          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-          data-id="ajatdarojat45"
-          data-description="Support me on Buy me a coffee!"
-          data-message=""
-          data-color="#FFDD00"
-          data-position="Right"
-          data-x_margin="18"
-          data-y_margin="18"
-        ></script>
-      </Head>
+	const handleSearchDelayed = useCallback(
+		_.debounce(async () => {
+			const res = await fetch(`${url}/search?q=${searchInput}`);
+			const data = await res.json();
+			setShowPosts(data);
+		}, 1000),
+		[searchInput]
+	);
 
-      <main className="container mx-auto">
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={handleNext}
-          hasMore={page * meta.perPage < meta.total ? true : false}
-          loader={
-            <p className="text-center m-5">
-              <b>Loading...</b>
-            </p>
-          }
-          refreshFunction={handleRefresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={50}
-          pullDownToRefreshContent={
-            <h3 style={{ textAlign: "center" }}>
-              &#8595; Pull down to refresh
-            </h3>
-          }
-          releaseToRefreshContent={
-            <h3 className="text-center m-5">&#8593; Release to refresh</h3>
-          }
-        >
-          <div className="divide-y divide-gray-100">
-            <Header image={image} />
-            <Nav>
-              {categories.map((category, index) => (
-                <NavItem
-                  isActive={selectedCategory === category ? true : false}
-                  onClick={handleSelectCategory}
-                  key={index}
-                >
-                  {category}
-                </NavItem>
-              ))}
-            </Nav>
-            <List>
-              {showPosts.map((post, index) => (
-                <ListItem
-                  key={post.id}
-                  post={{
-                    ...post,
-                    image: `https://source.unsplash.com/random/300x200?sig=${index}`,
-                  }}
-                />
-              ))}
-            </List>
-          </div>
-        </InfiniteScroll>
-      </main>
-      <Footer />
-    </div>
-  );
+	const handleSearch = (e) => {
+		let eventData = e.target.value;
+		setSearchInput(eventData);
+	};
+
+	useEffect(() => {
+		if (searchInput !== "") {
+			handleSearchDelayed();
+		} else {
+			setShowPosts(posts);
+		}
+		return handleSearchDelayed.cancel;
+	}, [searchInput, handleSearchDelayed]);
+
+	return (
+		<div>
+			<Head>
+				<meta charSet="UTF-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<title>Ajat Darojat | @ajatdarojat45</title>
+				<meta name="title" content="Ajat Darojat | @ajatdarojat45"></meta>
+				<meta
+					name="description"
+					content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+				/>
+				{/* twitter */}
+				<meta name="twitter:url" content="https://ajatdarojat45.id" />
+				<meta name="twitter:title" content="Ajat Darojat | @ajatdarojat45" />
+				<meta
+					name="twitter:description"
+					content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+				/>
+				<meta name="author" content="@ajatdarojat45" />
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:site" content="@ajatdarojat45" />
+				<meta name="twitter:creator" content="@ajatdarojat45" />
+				<meta
+					name="twitter:image:src"
+					content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
+				/>
+				<meta property="article:published_time" content="" />
+				{/* twitter */}
+				{/* facebook */}
+				<meta property="fb:app_id" content="442555743786001" />
+				<meta property="og:url" content="https://ajatdarojat45.id" />
+				<meta property="og:title" content="Ajat Darojat | @ajatdarojat45" />
+				<meta
+					property="og:description"
+					content="Website dan blog pribadi Ajat Darojat, baca tulisan dan lihat eksperimen saya"
+				/>
+				<meta
+					property="og:image"
+					content="https://res.cloudinary.com/ajatdarojat45/image/upload/v1620658750/ajatdarojat45/image_eya7le.png"
+				/>
+				<meta property="og:type" content="website" />
+				{/* facebook */}
+				<link rel="icon" href={image} />
+				<script
+					data-name="BMC-Widget"
+					data-cfasync="false"
+					src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+					data-id="ajatdarojat45"
+					data-description="Support me on Buy me a coffee!"
+					data-message=""
+					data-color="#FFDD00"
+					data-position="Right"
+					data-x_margin="18"
+					data-y_margin="18"
+				></script>
+			</Head>
+
+			<main className="container mx-auto">
+				<InfiniteScroll
+					dataLength={posts.length}
+					next={handleNext}
+					hasMore={page * meta.perPage < meta.total ? true : false}
+					loader={
+						searchInput === "" ? (
+							<p className="text-center m-5">
+								<b>Loading...</b>
+							</p>
+						) : (
+							""
+						)
+					}
+					refreshFunction={handleRefresh}
+					pullDownToRefresh
+					pullDownToRefreshThreshold={50}
+					pullDownToRefreshContent={
+						<h3 style={{ textAlign: "center" }}>&#8595; Pull down to refresh</h3>
+					}
+					releaseToRefreshContent={
+						<h3 className="text-center m-5">&#8593; Release to refresh</h3>
+					}
+				>
+					<div className="divide-y divide-gray-100">
+						<Header image={image} />
+						{/* <Nav>
+							{categories.map((category, index) => (
+								<NavItem
+									isActive={selectedCategory === category ? true : false}
+									onClick={handleSelectCategory}
+									key={index}
+								>
+									{category}
+								</NavItem>
+							))}
+						</Nav> */}
+						<div className="p-4">
+							<form className="relative">
+								<svg
+									width="20"
+									height="20"
+									fill="currentColor"
+									className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+								>
+									<path
+										fillRule="evenodd"
+										clipRule="evenodd"
+										d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+									/>
+								</svg>
+								<input
+									className="focus:border-light-blue-500 focus:ring-1 focus:ring-light-blue-500 focus:outline-none w-full text-sm text-black placeholder-gray-500 border border-gray-200 rounded-md py-2 pl-10"
+									type="text"
+									aria-label="Cari disini"
+									placeholder="Cari disini"
+									onChange={handleSearch}
+									value={searchInput}
+								/>
+							</form>
+						</div>
+						<List>
+							{showPosts.map((post, index) => (
+								<ListItem
+									key={post.id}
+									post={{
+										...post,
+										image: `https://source.unsplash.com/random/300x200?sig=${index}`,
+									}}
+								/>
+							))}
+						</List>
+					</div>
+				</InfiniteScroll>
+			</main>
+			<Footer />
+		</div>
+	);
 }
 
 export async function getStaticProps(context) {
-  try {
-    const resp = await fetch(process.env.BASE_URL);
-    const data = await resp.json();
-    return {
-      props: {
-        data,
-        url: process.env.BASE_URL,
-        image: process.env.DISPLAY_PICTURE,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        data: null,
-        url: process.env.BASE_URL,
-        image: process.env.DISPLAY_PICTURE,
-      },
-    };
-  }
+	try {
+		const resp = await fetch(process.env.BASE_URL);
+		const data = await resp.json();
+		return {
+			props: {
+				data,
+				url: process.env.BASE_URL,
+				image: process.env.DISPLAY_PICTURE,
+			},
+		};
+	} catch (error) {
+		return {
+			props: {
+				data: null,
+				url: process.env.BASE_URL,
+				image: process.env.DISPLAY_PICTURE,
+			},
+		};
+	}
 }
 
 export default Home;
