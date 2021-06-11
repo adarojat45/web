@@ -1,5 +1,13 @@
 import Head from "next/head";
-import { List, ListItem, Nav, NavItem, Header, Footer } from "../components";
+import {
+	List,
+	ListItem,
+	Nav,
+	NavItem,
+	Header,
+	Footer,
+	ScrollToTop,
+} from "../components";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import _ from "lodash";
@@ -135,11 +143,11 @@ function Home({ data, image, url }) {
 				></script>
 			</Head>
 
-			<main className="container mx-auto">
+			<main className="container mx-auto max-w-3xl">
 				<InfiniteScroll
-					dataLength={posts.length}
+					dataLength={posts?.length}
 					next={handleNext}
-					hasMore={page * meta.perPage < meta.total ? true : false}
+					hasMore={page * meta?.perPage < meta?.total ? true : false}
 					loader={
 						searchInput === "" ? (
 							<p className="text-center m-5">
@@ -197,7 +205,7 @@ function Home({ data, image, url }) {
 							</form>
 						</div>
 						<List>
-							{showPosts.map((post, index) => (
+							{showPosts?.map((post, index) => (
 								<ListItem
 									key={post.id}
 									post={{
@@ -209,6 +217,7 @@ function Home({ data, image, url }) {
 						</List>
 					</div>
 				</InfiniteScroll>
+				<ScrollToTop />
 			</main>
 			<Footer />
 		</div>
