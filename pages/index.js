@@ -68,7 +68,7 @@ function Home({ data, image, url }) {
 			const res = await fetch(`${url}/search?q=${searchInput}`);
 			const data = await res.json();
 			setShowPosts(data);
-		}, 1000),
+		}, 500),
 		[searchInput]
 	);
 
@@ -181,7 +181,7 @@ function Home({ data, image, url }) {
 							))}
 						</Nav> */}
 						<div className="p-4">
-							<form className="relative">
+							<div className="relative">
 								<svg
 									width="20"
 									height="20"
@@ -202,7 +202,7 @@ function Home({ data, image, url }) {
 									onChange={handleSearch}
 									value={searchInput}
 								/>
-							</form>
+							</div>
 						</div>
 						<List>
 							{showPosts?.map((post, index) => (
