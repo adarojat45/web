@@ -27,6 +27,7 @@ function Home({ data, image, url }) {
 	]);
 	const [selectedCategory, setSelectedCategory] = useState("All");
 	const [searchInput, setSearchInput] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		let _posts = [];
@@ -65,9 +66,16 @@ function Home({ data, image, url }) {
 
 	const handleSearchDelayed = useCallback(
 		_.debounce(async () => {
-			const res = await fetch(`${url}/search?q=${searchInput}`);
-			const data = await res.json();
-			setShowPosts(data);
+			try {
+				setIsLoading(true);
+				const res = await fetch(`${url}/search?q=${searchInput}`);
+				const data = await res.json();
+				setShowPosts(data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
 		}, 500),
 		[searchInput]
 	);
@@ -144,6 +152,25 @@ function Home({ data, image, url }) {
 			</Head>
 
 			<main className="container mx-auto max-w-3xl">
+				{isLoading && (
+					<div
+						style={{
+							backgroundColor: "rgba(0,0,0,0.0)",
+							backgroundColor: "rgba(0,0,0,0.2)",
+							height: "100vh",
+							width: "100vw",
+							zIndex: 1,
+							top: 0,
+							left: 0,
+							position: "fixed",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<b>Sabar ya, lagi nyari nih...</b>
+					</div>
+				)}
 				<InfiniteScroll
 					dataLength={posts?.length}
 					next={handleNext}
