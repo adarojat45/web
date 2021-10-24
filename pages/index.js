@@ -14,9 +14,9 @@ import _ from "lodash";
 import { useCallback } from "react";
 
 function Home({ data, image, url }) {
-	const [posts, setPosts] = useState(data?.data);
+	const [posts, setPosts] = useState(data?.posts);
 	const [showPosts, setShowPosts] = useState(data?.data);
-	const [meta, setMeta] = useState(data?.mataData);
+	const [meta, setMeta] = useState(data?.metaData);
 	const [page, setPage] = useState(1);
 	const [categories] = useState([
 		"All",
@@ -43,18 +43,18 @@ function Home({ data, image, url }) {
 
 	const handleNext = async () => {
 		if (searchInput === "") {
-			const res = await fetch(`${url}?page=${page + 1}`);
+			const res = await fetch(`${url}/posts?page=${page + 1}`);
 			const data = await res.json();
-			setPosts([...posts, ...data.data]);
+			setPosts([...posts, ...data.posts]);
 			setMeta(data.mataData);
 			setPage(page + 1);
 		}
 	};
 
 	const handleRefresh = async () => {
-		const res = await fetch(`${url}?page=1`);
+		const res = await fetch(`${url}/posts?page=1`);
 		const data = await res.json();
-		setPosts([...data.data]);
+		setPosts([...data.posts]);
 		setMeta(data.mataData);
 		setPage(1);
 		setSearchInput("");
@@ -68,11 +68,11 @@ function Home({ data, image, url }) {
 		_.debounce(async () => {
 			try {
 				setIsLoading(true);
-				const res = await fetch(`${url}/search?q=${searchInput}`);
+				const res = await fetch(`${url}/posts/search?q=${searchInput}`);
 				const data = await res.json();
 				setShowPosts(data);
 			} catch (error) {
-				console.log(error);
+				console.log("🚀 ~ file: index.js ~ line 75 ~ _.debounce ~ error", error);
 			} finally {
 				setIsLoading(false);
 			}
@@ -174,7 +174,7 @@ function Home({ data, image, url }) {
 				<InfiniteScroll
 					dataLength={posts?.length}
 					next={handleNext}
-					hasMore={page * meta?.perPage < meta?.total ? true : false}
+					hasMore={meta?.hasNextPage}
 					loader={
 						searchInput === "" ? (
 							<p className="text-center m-5">
@@ -253,7 +253,7 @@ function Home({ data, image, url }) {
 
 export async function getStaticProps(context) {
 	try {
-		const resp = await fetch(process.env.BASE_URL);
+		const resp = await fetch(`${process.env.BASE_URL}/posts`);
 		const data = await resp.json();
 		return {
 			props: {
