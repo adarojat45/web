@@ -46,7 +46,7 @@ function Home({ data, image, url }) {
 			const res = await fetch(`${url}/posts?page=${page + 1}`);
 			const data = await res.json();
 			setPosts([...posts, ...data.posts]);
-			setMeta(data.mataData);
+			setMeta(data.metaData);
 			setPage(page + 1);
 		}
 	};
@@ -55,7 +55,7 @@ function Home({ data, image, url }) {
 		const res = await fetch(`${url}/posts?page=1`);
 		const data = await res.json();
 		setPosts([...data.posts]);
-		setMeta(data.mataData);
+		setMeta(data.metaData);
 		setPage(1);
 		setSearchInput("");
 	};
