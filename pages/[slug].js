@@ -113,7 +113,7 @@ function Detail({ data, image }) {
 				<article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
 					<div className="mx-auto px-5 mb-10">
 						<Link href="/">
-							<a>Kembali</a>
+							<a className="font-medium text-black">Kembali</a>
 						</Link>
 					</div>
 					<header className="text-center border-b">
@@ -188,7 +188,7 @@ export async function getServerSideProps(context) {
 		params: { slug },
 	} = context;
 	try {
-		const resp = await fetch(`${process.env.BASE_URL}/findBySlug?slug=${slug}`);
+		const resp = await fetch(`${process.env.BASE_URL}/posts/${slug}`);
 		const data = await resp.json();
 		return {
 			props: {
