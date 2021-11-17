@@ -5,7 +5,12 @@ import Moment from "react-moment";
 import Prism from "prismjs";
 import { useEffect } from "react";
 import Link from "next/link";
-import { Comment, SocialShare, ScrollToTop } from "../components";
+import {
+	Comment,
+	SocialShare,
+	ScrollToTop,
+	RelatedPostCard,
+} from "../components";
 import ReactMarkdown from "react-markdown";
 
 function Detail({ data, image }) {
@@ -113,7 +118,7 @@ function Detail({ data, image }) {
 				<article className="mt-10 prose prose-indigo md:prose-lg lg:prose-xl max-w-none">
 					<div className="mx-auto px-5 mb-10">
 						<Link href="/">
-							<a className="font-medium text-black">Kembali</a>
+							<a className="font-medium text-sm text-gray-500">Kembali</a>
 						</Link>
 					</div>
 					<header className="text-center border-b">
@@ -127,11 +132,11 @@ function Detail({ data, image }) {
 							</p>
 						</div>
 						<h1 className="text-center">
-							<span className="text-3x1 font-medium tracking-light text-gray-900 sm:text-4x1">
+							<span className="text-2xl sm:text-3xl font-medium tracking-light text-gray-900">
 								{data?.name}
 							</span>
 						</h1>
-						<div className="text-center">
+						<div className="text-center mt-5">
 							{data?.tags.map((tag, index) => (
 								<p key={index} className="inline text-gray-500 font-light">
 									#{tag}{" "}
@@ -148,7 +153,7 @@ function Detail({ data, image }) {
 						) : (
 							parse(data?.description)
 						)}
-						<div className="text-center">
+						<div className="text-center mt-5 mb-5">
 							<SocialShare data={data} />
 						</div>
 						{/* buy me a coffee */}
@@ -172,6 +177,21 @@ function Detail({ data, image }) {
               crossOrigin="anonymous"
               async
             ></script> */}
+						<div class="flex flex-col sm:flex-row overflow-x-auto">
+							{data?.relatedPosts
+								?.filter((el) => el.id !== data.id)
+								.map((post, index) => {
+									return (
+										<RelatedPostCard
+											key={post.id}
+											post={{
+												...post,
+												image: `https://source.unsplash.com/random/300x200?sig=${index}`,
+											}}
+										/>
+									);
+								})}
+						</div>
 						<Comment />
 						{/* github comment */}
 					</div>
