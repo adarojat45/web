@@ -2,7 +2,10 @@ import Link from "next/link";
 
 export default function RelatedPostCard({ post }) {
 	return (
-		<article className="p-4 flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:w-1/4">
+		<article
+			className="p-4 flex flex-row sm:flex-col space-x-4 sm:space-x-0 sm:w-1/4"
+			style={{ minWidth: "25%" }}
+		>
 			<img
 				src={post.image}
 				alt=""
@@ -13,12 +16,11 @@ export default function RelatedPostCard({ post }) {
 			<div className="">
 				<dl className="flex flex-wrap text-sm font-medium whitespace-pre">
 					<div className="flex-none w-full mt-0.5 font-normal">
-						{post.categories
-							.map((category) => (
-								<p key={category.id} className="inline text-sm text-gray-700">
-									{category.name}{" "}
-								</p>
-							))}
+						{post.categories.map((category) => (
+							<p key={category.id} className="inline text-sm text-gray-700">
+								{category.name}{" "}
+							</p>
+						))}
 					</div>
 				</dl>
 				<Link href={`/${post.slug}`}>
