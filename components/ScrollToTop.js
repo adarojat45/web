@@ -31,7 +31,11 @@ export default function ScrollToTop() {
 				<div
 					onClick={scrollToTop}
 					className="fixed bg-white rounded-full h-16 w-16 flex items-center justify-center shadow-2xl bottom-24 right-5 lg:bottom-5 lg:right-5"
-					style={{ boxShadow: "rgb(0 0 0 / 40%) 0px 4px 8px", cursor: "pointer" }}
+					style={{
+						boxShadow: "rgb(0 0 0 / 40%) 0px 4px 8px",
+						cursor: "pointer",
+						bottom: 90,
+					}}
 				>
 					<svg
 						width="2em"
