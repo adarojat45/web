@@ -84,6 +84,9 @@ function Detail({ data, image }) {
 					id="holderStyle"
 					dangerouslySetInnerHTML={{
 						__html: `
+						.prose {
+							color: #374151
+						}
             .prose code {
               background-color: rgba(0,0,0,.05);
               border-radius: 3px;
@@ -96,6 +99,10 @@ function Detail({ data, image }) {
             code::after {
               display: none;
             }
+						.prose p {
+    					margin-top: 1.25em;
+							margin-bottom: 1.25em;
+						}
         `,
 					}}
 				/>
