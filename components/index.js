@@ -8,3 +8,4 @@ export { default as Comment } from "./Comment";
 export { default as SocialShare } from "./SocialShare";
 export { default as SocialMedia } from "./SocialMedia";
 export { default as ScrollToTop } from "./ScrollToTop";
+export { default as RelatedPostCard } from "./RelatedPostCard";

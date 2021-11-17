@@ -257,7 +257,7 @@ export async function getStaticProps(context) {
 		const data = await resp.json();
 		return {
 			props: {
-				data,
+				data: data,
 				url: process.env.BASE_URL,
 				image: process.env.DISPLAY_PICTURE,
 			},
