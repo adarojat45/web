@@ -129,7 +129,7 @@ function Detail({ data, image }) {
 						</Link>
 					</div>
 					<header className="text-center border-b">
-						<div className="text-center mb-5">
+						<div className="text-center">
 							<p
 								className="inline text-gray-500 font-light"
 								title={`${data?.createdAt} minutes`}
@@ -138,13 +138,13 @@ function Detail({ data, image }) {
 								<Moment fromNow>{data?.createdAt}</Moment>)
 							</p>
 						</div>
-						<h1 className="text-center">
+						<h1 className="text-center" style={{margin: 0, padding: 0}}>
 							<span className="text-2xl sm:text-3xl font-medium tracking-light text-gray-900">
 								{data?.name}
 							</span>
 						</h1>
 						<div className="text-center mt-5">
-							{data?.tags.map((tag, index) => (
+							{data?.tags?.map((tag, index) => (
 								<p key={index} className="inline text-gray-500 font-light">
 									#{tag}{" "}
 								</p>
@@ -156,9 +156,11 @@ function Detail({ data, image }) {
 					</header>
 					<div className="mt-8 mx-auto px-5 text-justify">
 						{data?.isMarkdown ? (
-							<ReactMarkdown>{data?.description}</ReactMarkdown>
+							<ReactMarkdown>
+							{data?.description}
+							</ReactMarkdown>
 						) : (
-							parse(data?.description)
+							parse(data?.description || "")
 						)}
 						<div className="text-center mt-5 mb-5">
 							<SocialShare data={data} />
